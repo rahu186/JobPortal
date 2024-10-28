@@ -23,7 +23,7 @@ const UpdateJob = () => {
   const onSubmit = (data) => {
     data.skills = selectedOption;
     // console.log(data);
-    fetch(`http://localhost:5000/update-job/${id}`, {
+    fetch(`https://jobportal-slg2.onrender.com/update-job/${id}`, {
       method : "PATCH",
       headers : {'content-type': 'application/json'},
       body : JSON.stringify(data)  

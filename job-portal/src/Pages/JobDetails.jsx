@@ -11,7 +11,7 @@ const JobDetails = () => {
 
   useEffect(() => {
     // Fetch job details from the API
-    fetch(`http://localhost:5000/all-jobs/${id}`)
+    fetch(`https://jobportal-slg2.onrender.com/all-jobs/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch job details');

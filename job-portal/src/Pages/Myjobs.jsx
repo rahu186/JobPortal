@@ -12,7 +12,7 @@ const Myjobs = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        fetch(`http://localhost:5000/myjobs/rahulyadav42j@gmail.com`)
+        fetch(`https://jobportal-slg2.onrender.com/myjobs/rahulyadav42j@gmail.com`)
             .then(res => res.json())
             .then(data => {
                 setJobs(data);
@@ -33,7 +33,7 @@ const Myjobs = () => {
     };
 
     const handleDelete = (_id) => {
-        fetch(`http://localhost:5000/job/${_id}`, {
+        fetch(`https://jobportal-slg2.onrender.com/job/${_id}`, {
             method: "DELETE",
         })
         .then(res => res.json()) // Corrected: Added parentheses to call res.json()

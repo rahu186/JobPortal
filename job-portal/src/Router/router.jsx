@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         path: "edit-job/:id",
         element: <UpdateJob />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/all-jobs/${params.id}`)
+          fetch(`https://jobportal-slg2.onrender.com/all-jobs/${params.id}`)
       },
       {
         path: "/login",

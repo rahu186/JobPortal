@@ -13,7 +13,7 @@ export const Home = () => {
   const itemPerPage = 8;
 
   useEffect(() => {
-    fetch("http://localhost:5000/all-jobs")
+    fetch("https://jobportal-slg2.onrender.com/all-jobs")
       .then((res) => res.json())
       .then((data) => {
         // Sort jobs by postingDate in descending order (newest first)
