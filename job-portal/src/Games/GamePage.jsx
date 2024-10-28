@@ -11,7 +11,7 @@ const GamePage = () => {
 
   useEffect(() => {
     // Fetch game details based on the game name
-    fetch(`http://localhost:5000/games/${gameName}`)
+    fetch(`https://jobportal-slg2.onrender.com/games/${gameName}`)
       .then((response) => {
         // Check if the response is not OK
         if (!response.ok) {
