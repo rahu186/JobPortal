@@ -16,12 +16,16 @@ export const Home = () => {
     fetch("https://jobportal-slg2.onrender.com/all-jobs")
       .then((res) => res.json())
       .then((data) => {
-        // Sort jobs by postingDate in descending order (newest first)
+        // console.log(data); // Check the API response structure
         const sortedJobs = data.sort(
           (a, b) => new Date(b.postingDate) - new Date(a.postingDate)
         );
         setJobs(sortedJobs);
-        setIsLoading(false);
+        setIsLoading(false); // Ensure loading state is updated after the data is fetched
+      })
+      .catch((error) => {
+        console.error("Error fetching jobs:", error);
+        setIsLoading(false); // Stop loading in case of error
       });
   }, []);
 
@@ -46,28 +50,28 @@ export const Home = () => {
     setCurrentPage(1); // Reset to initial page
   };
 
-  //calculate the index range
+  // Calculate the index range
   const calculatePageRange = () => {
     const startIndex = (currentPage - 1) * itemPerPage;
     const endIndex = startIndex + itemPerPage;
     return { startIndex, endIndex };
   };
 
-  //function for the next page
+  // Function for the next page
   const nextPage = () => {
     if (currentPage < Math.ceil(filteredItems.length / itemPerPage)) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  //function for the previous page
+  // Function for the previous page
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
-  //main functions
+  // Main function to filter data
   const filterData = (jobs, selected, query) => {
     let filteredJobs = jobs;
     if (query) {
@@ -88,7 +92,7 @@ export const Home = () => {
       });
     }
 
-    //slice the data based on current Page
+    // Slice the data based on the current page
     const { startIndex, endIndex } = calculatePageRange();
     filteredJobs = filteredJobs.slice(startIndex, endIndex);
     return filteredJobs.map((data, i) => <Card key={i} data={data} />);
@@ -100,14 +104,14 @@ export const Home = () => {
     <div>
       <Banner query={query} handleInputChange={handleInputChange} />
 
-      {/*main content*/}
+      {/* Main content */}
       <div className="bg-[#706767] md:grid grid-cols-4 gap-8 lg:px-24 px-4 py-12">
-        {/*left side */}
+        {/* Left side */}
         <div className="bg-white p-2 md:p-4 mb-4 rounded">
           <Sidebar handleChange={handleChange} handleClick={handleClick} />
         </div>
 
-        {/*center job part side */}
+        {/* Center job part side */}
         <div className="col-span-2 bg-white p-4 rounded">
           {isLoading ? (
             <p className="font-medium">Loading....</p>
@@ -120,7 +124,7 @@ export const Home = () => {
             </>
           )}
 
-          {/*pagination here */}
+          {/* Pagination */}
           {result.length > 0 ? (
             <div className="flex justify-center mt-4 space-x-8">
               <button onClick={prevPage} disabled={currentPage === 1}>
@@ -142,7 +146,7 @@ export const Home = () => {
           )}
         </div>
 
-        {/*right side */}
+        {/* Right side */}
         <div className="bg-white p-4 rounded"><Newsletter/></div>
       </div>
     </div>

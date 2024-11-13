@@ -1,29 +1,32 @@
 import { Link } from "react-router-dom";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext'; // Assuming you have an AuthContext
 
 const Myjobs = () => {
+    const { user } = useContext(AuthContext); // Get the current user from context (firebase authenticated user)
     const [jobs, setJobs] = useState([]);
     const [filteredJobs, setFilteredJobs] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [visibleJobsCount, setVisibleJobsCount] = useState(5); // Initial number of jobs to display
-   
-
 
     useEffect(() => {
-        setIsLoading(true);
-        fetch(`https://jobportal-slg2.onrender.com/myjobs/rahulyadav42j@gmail.com`)
-            .then(res => res.json())
-            .then(data => {
-                setJobs(data);
-                setFilteredJobs(data);
-                setIsLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching jobs:', error);
-                setIsLoading(false);
-            });
-    }, [searchText]);
+        if (user) {
+            setIsLoading(true);
+            // Fetch jobs posted by the logged-in user (use user.email)
+            fetch(`https://jobportal-slg2.onrender.com/myjobs/${user.email}`)
+                .then(res => res.json())
+                .then(data => {
+                    setJobs(data);
+                    setFilteredJobs(data);
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    console.error('Error fetching jobs:', error);
+                    setIsLoading(false);
+                });
+        }
+    }, [user, searchText]); // Run effect when user or searchText changes
 
     const handleSearch = () => {
         const filtered = jobs.filter(job =>
@@ -36,27 +39,26 @@ const Myjobs = () => {
         fetch(`https://jobportal-slg2.onrender.com/job/${_id}`, {
             method: "DELETE",
         })
-        .then(res => res.json()) // Corrected: Added parentheses to call res.json()
-        .then(data => {
-            if (data.acknowledged === true) {
-                alert("Job Deleted Successfully!");
-                // Update the state to remove the deleted job from the list
-                setJobs(jobs.filter(job => job._id !== _id));
-                setFilteredJobs(filteredJobs.filter(job => job._id !== _id));
-            } else {
-                alert("Failed to delete the job. Try again.");
-            }
-        })
-        .catch(error => {
-            console.error('Error deleting job:', error);
-            alert("An error occurred. Please try again.");
-        });
+            .then(res => res.json()) 
+            .then(data => {
+                if (data.acknowledged === true) {
+                    alert("Job Deleted Successfully!");
+                    // Update the state to remove the deleted job from the list
+                    setJobs(jobs.filter(job => job._id !== _id));
+                    setFilteredJobs(filteredJobs.filter(job => job._id !== _id));
+                } else {
+                    alert("Failed to delete the job. Try again.");
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting job:', error);
+                alert("An error occurred. Please try again.");
+            });
     };
 
     const handleShowMore = () => {
         setVisibleJobsCount(visibleJobsCount + 5); // Increase the number of visible jobs by 5
     };
-    
 
     return (
         <div className='max-w-screen-2xl container mx-auto xl:px-24 px-4'>
@@ -158,27 +160,16 @@ const Myjobs = () => {
                                 
                             )}
 
-{visibleJobsCount < filteredJobs.length && (
-    <div className="text-center mt-4">
-        <button onClick={handleShowMore} className="bg-blue-500 text-black py-2 px-4 rounded-sm">
-            Show More
-        </button>
-    </div>
-)}
+                            {visibleJobsCount < filteredJobs.length && (
+                                <div className="text-center mt-4">
+                                    <button onClick={handleShowMore} className="bg-blue-500 text-black py-2 px-4 rounded-sm">
+                                        Show More
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
-                <footer className="relative pt-8 pb-6 mt-16">
-                    <div className="container mx-auto px-4">
-                        <div className="flex flex-wrap items-center md:justify-between justify-center">
-                            <div className="w-full md:w-6/12 px-4 mx-auto text-center">
-                                {/* <div className="text-sm text-blueGray-500 font-semibold py-1">
-                                    Made with <a href="https://www.creative-tim.com/product/notus-js" className="text-blueGray-500 hover:text-gray-800" target="_blank" rel="noopener noreferrer">Notus JS</a> by <a href="https://www.creative-tim.com" className="text-blueGray-500 hover:text-blueGray-800" target="_blank" rel="noopener noreferrer">Creative Tim</a>.
-                                </div> */}
-                            </div>
-                        </div>
-                    </div>
-                </footer>
             </section>
         </div>
     );

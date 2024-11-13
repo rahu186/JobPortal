@@ -9,6 +9,10 @@ import Login from "../component/Login";
 import JobDetails from "../Pages/JobDetails";
 import Games from "../Games/Games";
 import GamePage from "../Games/GamePage";
+import Singnup from "../component/SignUp";
+import SignUp from "../component/SignUp";
+import ForgotPassword from "../component/ForgotPassword";
+import ResetPassword from "../component/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +40,18 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />
+      },
+      {
+        path: "/sign-up",
+        element: <SignUp/>
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword/>
+      },
+      {
+        path :"/reset-password" ,
+        element :  <ResetPassword/>
       },
       {
         path: "/job/:id",

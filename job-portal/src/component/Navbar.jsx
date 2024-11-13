@@ -77,7 +77,7 @@ export const Navbar = () => {
                 Log in
               </Link>
               <Link
-                to="/signup"
+                to="/sign-up"
                 className="py-2 px-5 border rounded bg-blue text-white"
               >
                 Sign Up
@@ -126,9 +126,18 @@ export const Navbar = () => {
                   <button onClick={handleLogout} className="text-white">Logout</button>
                 </div>
               ) : (
-                <Link to="/login" onClick={handleMenuToggler}>
-                  Log in
-                </Link>
+                <div className="flex flex-col space-y-3"> {/* Added flex-col here */}
+                  <Link to="/login" onClick={handleMenuToggler} className="text-white">
+                    Log in
+                  </Link>
+                  <Link
+                    to="/sign-up"
+                    onClick={handleMenuToggler}
+                    className="text-white"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
               )}
             </li>
           </ul>
