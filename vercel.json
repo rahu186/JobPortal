@@ -1,7 +1,14 @@
 {
+    "version": 2,
+    "builds": [
+      {
+        "src": "job-portal/package.json",
+        "use": "@vercel/static-build"
+      }
+    ],
     "rewrites": [
       {
-        "source": "/:path*",
+        "source": "/(.*)",
         "destination": "/index.html"
       }
     ]
