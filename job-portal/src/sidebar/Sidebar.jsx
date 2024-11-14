@@ -6,7 +6,7 @@ import JobPostingData from './JobPostingData';
 import WorkExperience from './WorkExperience';
 import EmploymentType from './EmploymentType';
 
-const Sidebar = ({ handleChange, handleClick }) => {
+const Sidebar = ({ handleChange, handleClick ,handleSidebarLocationChange}) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     // Toggle the dropdown visibility
@@ -32,9 +32,9 @@ const Sidebar = ({ handleChange, handleClick }) => {
                 className={`mt-2 space-y-4 ${isDropdownOpen ? 'block' : 'hidden'} md:block`}
             >
                 <div className='border border-gray-300 rounded-md p-2'> {/* Adjusted filter container */}
-                    <Location handleChange={handleChange} />
+                    <Location handleChange={handleSidebarLocationChange}  />
                 </div>
-                <div className='border border-gray-300 rounded-md p-2'>
+                {/* <div className='border border-gray-300 rounded-md p-2'>
                     <Salary handleChange={handleChange} handleClick={handleClick} />
                 </div>
                 <div className='border border-gray-300 rounded-md p-2'>
@@ -45,7 +45,7 @@ const Sidebar = ({ handleChange, handleClick }) => {
                 </div>
                 <div className='border border-gray-300 rounded-md p-2'>
                     <EmploymentType handleChange={handleChange} />
-                </div>
+                </div> */}
             </div>
         </div>
     );

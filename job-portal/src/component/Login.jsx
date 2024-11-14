@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
 import app from '../firebase/firebase.config';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';  // Import Link here
 import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
@@ -82,8 +82,8 @@ const Login = () => {
 
                 {/* Links to Sign Up or Forgot Password */}
                 <div className="flex justify-between mt-4 text-sm">
-                    <a href="/forgot-password" className="text-blue">Forgot Password?</a>
-                    <a href="/sign-up" className="text-blue-500">Sign up</a>
+                    <Link to="/forgot-password" className="text-blue">Forgot Password?</Link>
+                    <Link to="/sign-up" className="text-blue">Sign up</Link>
                 </div>
             </div>
         </div>
