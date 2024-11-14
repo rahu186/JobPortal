@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore"; // Firestore imports
 import app from '../firebase/firebase.config';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const SignUp = () => {
