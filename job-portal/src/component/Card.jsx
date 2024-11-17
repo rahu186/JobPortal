@@ -33,7 +33,7 @@ export const Card = ({ data }) => {
             src={companyLogo} 
             alt={`${companyName} Logo`} 
             onError={(e) => { e.target.onerror = null; e.target.src = "/images/alternate.jpg"; }} 
-            className="w-10 h-10 rounded-lg object-cover" // Changed to square with rounded corners
+            className="w-10 h-10 rounded-lg object-cover logo-shadow" // Changed to square with rounded corners
           />
           <div>
             <h4 className="text-primary mb-1 text-base sm:text-lg font-semibold">{companyName}</h4>

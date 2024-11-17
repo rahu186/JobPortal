@@ -217,6 +217,24 @@ const CreateJob = () => {
             </div>
           </div>
 
+          
+
+           {/*Job Details Banner row*/}
+           <div className="create-job-flex">
+           <div className="lg:w-1/2 w-full">
+              <label className="block mb-2 text-lg sm:text-xl">Job Details Banner</label>
+              <input
+                type="url"
+                placeholder="Paste your company logo URL: https://www.google.com"
+                {...register("jobBanner")}
+                className="create-job-input"
+              />
+            </div>
+          </div>
+
+          
+
+
           {/*Eighth row*/}
           <div>
             <label className="block mb-2 text-lg sm:text-xl">Job Description</label>

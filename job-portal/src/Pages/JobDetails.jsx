@@ -60,18 +60,12 @@ const JobDetails = () => {
         </div>
 
         {/* Company Logo Section */}
-        <div className="flex justify-center mb-6 p-4">
-          {job.companyLogo ? (
+        <div className="flex justify-center mb-6 p-4">       
             <img
-              src={job.companyLogo}
+              src={job.jobBanner ||"/images/JobDetailsBanner.png"}
               alt={job.company}
-              className="h-50 w-50 object-cover"
+              className="w-full object-cover h-45 sm:h-64 md:h-80 lg:h-90"
             />
-          ) : (
-            <div className="w-full h-40 bg-gray flex items-center justify-center">
-              <span>No Logo Available</span>
-            </div>
-          )}
         </div>
 
         {/* Job Description Section */}
