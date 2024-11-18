@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Creatable from "react-select/creatable";
+// import ReactQuill from "react-quill";
+// import "react-quill/dist/quill.snow.css";
 
 const CreateJob = () => {
   const [selectedOption, setSelectedOption] = useState(null);
+  const [jobDescription, setJobDescription] = useState(""); // State for rich text editor
 
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
     data.skills = selectedOption;
+    data.description = jobDescription; // Adding jobDescription to the data
     fetch("https://jobportal-slg2.onrender.com/post-job", {
       method: "POST",
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(data)
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((result) => {
@@ -26,6 +29,7 @@ const CreateJob = () => {
           alert("Job Posted Successfully!!!");
         }
         reset();
+        setJobDescription(""); // Reset jobDescription
       });
   };
 
@@ -41,10 +45,10 @@ const CreateJob = () => {
 
   return (
     <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
-      {/*form*/}
+      {/* Form */}
       <div className="bg-[#f4f1f1] py-10 px-4 lg:px-16">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/*first row */}
+          {/* First row */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg sm:text-xl">Job Title</label>
@@ -66,7 +70,7 @@ const CreateJob = () => {
             </div>
           </div>
 
-          {/*second row*/}
+          {/* Second row */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg sm:text-xl">Minimum Salary</label>
@@ -88,7 +92,7 @@ const CreateJob = () => {
             </div>
           </div>
 
-          {/*third row*/}
+          {/* Third row */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg sm:text-xl">Salary Type</label>
@@ -103,30 +107,26 @@ const CreateJob = () => {
               <label className="block mb-2 text-lg sm:text-xl">Job Location</label>
               <input
                 type="text"
-                placeholder="Ex : New York"
+                placeholder="Ex: New York"
                 {...register("jobLocation")}
                 className="create-job-input"
               />
             </div>
           </div>
 
-          {/*Fourth row*/}
+          {/* Fourth row */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg sm:text-xl">Job Posting Date</label>
               <input
                 type="date"
-                placeholder="Ex : 2023-11-28"
                 {...register("postingDate")}
                 className="create-job-input"
               />
             </div>
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg sm:text-xl">Experience Level</label>
-              <select
-                {...register("experienceLevel")}
-                className="create-job-input"
-              >
+              <select {...register("experienceLevel")} className="create-job-input">
                 <option value="">Choose your experience</option>
                 <option value="Fresher">Fresher</option>
                 <option value="0-1 Yrs">0-1 Yrs</option>
@@ -135,7 +135,7 @@ const CreateJob = () => {
             </div>
           </div>
 
-          {/*Additional Row */}
+          {/* Additional row */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg sm:text-xl">Qualification</label>
@@ -146,7 +146,6 @@ const CreateJob = () => {
                 className="create-job-input"
               />
             </div>
-
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg sm:text-xl">Batch</label>
               <input
@@ -158,7 +157,7 @@ const CreateJob = () => {
             </div>
           </div>
 
-          {/*Fifth row*/}
+          {/* Fifth row */}
           <div>
             <label className="block mb-2 text-lg sm:text-xl">Required Skill Sets</label>
             <Creatable
@@ -170,23 +169,20 @@ const CreateJob = () => {
             />
           </div>
 
-          {/*Sixth row*/}
+          {/* Sixth row */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg sm:text-xl">Company Logo</label>
               <input
                 type="url"
-                placeholder="Paste your company logo URL: https://www.google.com"
+                placeholder="Paste your company logo URL"
                 {...register("companyLogo")}
                 className="create-job-input"
               />
             </div>
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg sm:text-xl">Employment Type</label>
-              <select
-                {...register("employmentType")}
-                className="create-job-input"
-              >
+              <select {...register("employmentType")} className="create-job-input">
                 <option value="">Choose Employment Type</option>
                 <option value="Full-time">Full-time</option>
                 <option value="Internship">Internship</option>
@@ -195,67 +191,42 @@ const CreateJob = () => {
             </div>
           </div>
 
-          {/*Seventh row*/}
+          {/* Job Details Banner */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg sm:text-xl">Last Date to Apply</label>
-              <input
-                type="date"
-                placeholder="Ex : 2023-11-28"
-                {...register("lastDate")}
-                className="create-job-input"
-              />
-            </div>
-            <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg sm:text-xl">Apply Link</label>
-              <input
-                type="url"
-                placeholder="Paste your apply link: https://www.google.com"
-                {...register("applyLink")}
-                className="create-job-input"
-              />
-            </div>
-          </div>
-
-          
-
-           {/*Job Details Banner row*/}
-           <div className="create-job-flex">
-           <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg sm:text-xl">Job Details Banner</label>
               <input
                 type="url"
-                placeholder="Paste your company logo URL: https://www.google.com"
+                placeholder="Paste your banner URL"
                 {...register("jobBanner")}
                 className="create-job-input"
               />
             </div>
           </div>
 
-          
-
-
-          {/*Eighth row*/}
+          {/* Job Description */}
           <div>
             <label className="block mb-2 text-lg sm:text-xl">Job Description</label>
-            <textarea
-              className="w-full pl-3 py-1.5 focus:outline-none"
-              rows={6}
-              placeholder="Job Description"
-              {...register("description")}
+            <ReactQuill
+              value={jobDescription}
+              onChange={setJobDescription}
+              theme="snow"
+              placeholder="Enter job description here..."
+              className="bg-white rounded-md"
             />
           </div>
 
-          {/*Last row*/}
+          {/* Job Posted By */}
           <div>
             <label className="block mb-2 text-lg sm:text-xl">Job Posted By</label>
             <input
               type="email"
-              placeholder="your email"
+              placeholder="Your email"
               {...register("postedBy")}
               className="create-job-input"
             />
           </div>
+
           <input
             type="submit"
             className="block mt-12 bg-blue text-white font-semibold px-8 py-2 rounded-sm cursor-pointer"

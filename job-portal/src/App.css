@@ -74,6 +74,32 @@ li {
 .logo-shadow:hover {
   box-shadow: 0 8px 10px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.12);
 }
+/* Job Details Page Css */
+/* Ensure proper list styles are applied */
+#job-description ul li {
+  list-style-type: disc;
+  margin-left: 20px; /* Optional: Adjust indentation */
+  text-align: justify;
+}
+
+/* Apply to ordered lists (numbers) */
+#job-description ol li {
+  list-style-type: decimal;
+  margin-left: 20px; /* Optional: Adjust indentation */
+  text-align: justify;
+}
+
+/* Add space between paragraphs in the job description */
+#job-description p {
+  margin : 1rem 1rem;/* Or whatever spacing you prefer */
+  text-align: justify;
+}
+
+#job-description a{
+  text-decoration: underline;
+  color: blue;
+}
+
 
 
 

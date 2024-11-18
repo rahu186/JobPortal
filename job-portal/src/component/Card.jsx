@@ -2,6 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FiCalendar, FiClock, FiDollarSign, FiMapPin } from "react-icons/fi";
 
+// Function to strip HTML tags from text
+const stripHTMLTags = (html) => {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent || "";
+};
+
 export const Card = ({ data }) => {
   const {
     _id,
@@ -19,20 +25,24 @@ export const Card = ({ data }) => {
 
   // Function to truncate the description
   const truncateDescription = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return text.slice(0, maxLength) + "...";
+    const cleanedDescription = stripHTMLTags(text); // Remove HTML tags
+    if (cleanedDescription.length > maxLength) {
+      return cleanedDescription.slice(0, maxLength) + "...";
     }
-    return text;
+    return cleanedDescription;
   };
 
   return (
     <div>
       <section className="card bg-white shadow rounded p-4">
         <Link to={`/job/${_id}`} className="flex gap-4 flex-col sm:flex-row items-start">
-          <img 
-            src={companyLogo} 
-            alt={`${companyName} Logo`} 
-            onError={(e) => { e.target.onerror = null; e.target.src = "/images/alternate.jpg"; }} 
+          <img
+            src={companyLogo}
+            alt={`${companyName} Logo`}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "/images/alternate.jpg";
+            }}
             className="w-10 h-10 rounded-lg object-cover logo-shadow" // Changed to square with rounded corners
           />
           <div>
