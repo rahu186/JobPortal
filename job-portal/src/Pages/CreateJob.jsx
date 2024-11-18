@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 // import ReactQuill from 'react-quill';
-// import Creatable from 'react-select/creatable';
+import Creatable from 'react-select/creatable';
 // import ReactQuill from "react-quill";
 // import "react-quill/dist/quill.snow.css";
 
