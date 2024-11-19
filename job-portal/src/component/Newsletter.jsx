@@ -79,7 +79,7 @@ const Newsletter = () => {
       </div>
 
       {/* 2nd part - Upload Resume */}
-      <div className="mt-20">
+      <div className="mt-16">
         <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
           <FaRocket />
           Get noticed faster
