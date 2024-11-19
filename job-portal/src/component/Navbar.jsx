@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { FaBarsStaggered, FaXmark } from "react-icons/fa6";
 import { AuthContext } from '../context/AuthContext'; // Import AuthContext
 import { getAuth, signOut } from "firebase/auth"; // Import signOut from Firebase
@@ -8,6 +8,7 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, setUser } = useContext(AuthContext); // Get user from AuthContext
   const auth = getAuth(); // Get the auth instance
+  const navigate = useNavigate(); // Initialize navigate hook
 
   const handleMenuToggler = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -25,6 +26,7 @@ export const Navbar = () => {
       .then(() => {
         setUser(null); // Reset user context
         console.log("User logged out"); // Optional: log message
+        navigate("/"); // Redirect to home page
       })
       .catch((error) => {
         console.error("Logout error:", error); // Handle errors if needed
@@ -115,25 +117,30 @@ export const Navbar = () => {
                 )}
               </li>
             ))}
-            <li className="text-white py-1">
+            <li className="text-base text-white py-1 mt-3">
               {user ? (
-                <div className="flex items-center gap-2">
-                  <img
-                    src={user.photoURL || "/path/to/default/image.png"} // Fallback image
-                    alt={`${user.displayName}'s account`}
-                    className="w-8 h-8 rounded-full"
-                  />
-                  <button onClick={handleLogout} className="text-white">Logout</button>
-                </div>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    handleMenuToggler();
+                  }}
+                  className="py-2 px-4 border rounded bg-red-600 text-white w-full"
+                >
+                  Logout
+                </button>
               ) : (
-                <div className="flex flex-col space-y-3"> {/* Added flex-col here */}
-                  <Link to="/login" onClick={handleMenuToggler} className="text-white">
+                <div className="flex flex-col gap-3">
+                  <Link
+                    to="/login"
+                    className="py-2 px-4 border rounded bg-white text-primary w-full text-center"
+                    onClick={handleMenuToggler}
+                  >
                     Log in
                   </Link>
                   <Link
                     to="/sign-up"
+                    className="py-2 px-4 border rounded bg-blue text-white w-full text-center"
                     onClick={handleMenuToggler}
-                    className="text-white"
                   >
                     Sign Up
                   </Link>
