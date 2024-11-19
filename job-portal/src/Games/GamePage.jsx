@@ -63,7 +63,7 @@ const GamePage = () => {
   };
 
   return (
-    <div className="bg-[#706767] flex justify-center items-start min-h-screen px-4 py-12">
+    <div className="bg-[#272525] flex justify-center items-start min-h-screen px-4 py-12">
       <div className="grid grid-cols-1 gap-8 w-full max-w-screen-xl">
         {/* First row: Title and Description */}
         <div className="flex flex-col items-center">

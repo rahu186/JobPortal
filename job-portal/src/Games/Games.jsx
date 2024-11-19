@@ -18,7 +18,7 @@ const Games = () => {
   };
 
   return (
-    <div className="bg-[#706767] flex justify-center items-start min-h-screen px-4 py-12">
+    <div className="bg-[#272525] flex justify-center items-start min-h-screen px-4 py-12">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full max-w-screen-xl">
         {games.map((game) => (
           <div

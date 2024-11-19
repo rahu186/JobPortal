@@ -139,7 +139,7 @@ const TruthDare = () => {
   };
 
   return (
-    <div className="bg-[#706767] w-full min-h-screen flex justify-center items-center p-4 sm:p-6">
+    <div className="bg-[#272525] w-full min-h-screen flex justify-center items-center p-4 sm:p-6">
       <div className="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-md grid sm:grid-rows-2 gap-6 p-6 sm:p-10">
         
         {/* First Row: Bottle Spinner Section */}

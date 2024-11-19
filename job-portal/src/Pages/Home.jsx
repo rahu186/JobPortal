@@ -83,7 +83,7 @@ export const Home = () => {
   return (
     <div>
       <Banner query={query} location={location} handleInputChange={handleInputChange} />
-      <div className="bg-[#706767] md:grid grid-cols-4 gap-8 lg:px-24 px-4 py-12">
+      <div className="bg-[#272525] md:grid grid-cols-4 gap-8 lg:px-24 px-4 py-12">
         <div className="bg-white p-2 md:p-4 mb-4 rounded">
           <Sidebar handleChange={setSelected} />
         </div>

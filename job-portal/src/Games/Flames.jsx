@@ -69,7 +69,7 @@ const Flames = () => {
   };
 
   return (
-    <div className="bg-[#706767] flex justify-center items-start min-h-screen px-4 py-12">
+    <div className="bg-[#272525] flex justify-center items-start min-h-screen px-4 py-12">
       <div className="w-full max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold mb-4">FLAMES Game</h1>
         <input
