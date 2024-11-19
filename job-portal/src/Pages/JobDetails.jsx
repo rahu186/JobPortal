@@ -101,6 +101,43 @@ const JobDetails = () => {
   </div>
 </div>
 
+       {/* Table of Contents for Small Screens */}
+       <div className="lg:hidden bg-gray-100 p-4 rounded shadow-md mb-8">
+  <h2 className="text-lg sm:text-xl font-semibold mb-4">Table of Contents</h2>
+  <table className="min-w-full border-collapse border border-gray-300 mb-4">
+    <thead>
+      <tr>
+        <th className="border border-gray-300 px-4 py-2 bg-gray-200">Section</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td className="border border-gray-300 px-4 py-2">
+          <a href="#job-description" className="text-blue-500 hover:underline">Job Description</a>
+        </td>
+      </tr>
+      <tr>
+        <td className="border border-gray-300 px-4 py-2">
+          <a href="#job-details" className="text-blue-500 hover:underline">Job Details</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  {/* Video Section */}
+  <div className="mt-6">
+    <h2 className="text-lg sm:text-xl font-semibold mb-4">Related Video</h2>
+    <div className="aspect-w-16 aspect-h-9">
+      <iframe
+        className="w-full h-full rounded border border-gray-300"
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+        title="Related Video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+    </div>
+  </div>
+</div>
 
 
         {/* Job Details Section */}
@@ -165,29 +202,46 @@ const JobDetails = () => {
         </div>
       </div>
 
-      {/* Right Column: Table of Contents for larger screens */}
-      <div className="hidden lg:block bg-white p-4 rounded shadow-md col-span-1">
-        <h2 className="text-lg sm:text-xl font-semibold mb-4">Table of Contents</h2>
-        <table className="min-w-full border-collapse border border-gray-300">
-          <thead>
-            <tr>
-              <th className="border border-gray-300 px-4 py-2 bg-gray-200">Section</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="border border-gray-300 px-4 py-2">
-                <a href="#job-description" className="text-blue-500 hover:underline">Job Description</a>
-              </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 px-4 py-2">
-                <a href="#job-details" className="text-blue-500 hover:underline">Job Details</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      
+      {/* Right Column: Table of Contents and Video for larger screens */}
+<div className="hidden lg:block bg-white p-4 rounded shadow-md col-span-1">
+  <h2 className="text-lg sm:text-xl font-semibold mb-4">Table of Contents</h2>
+  <table className="min-w-full border-collapse border border-gray-300 mb-4">
+    <thead>
+      <tr>
+        <th className="border border-gray-300 px-4 py-2 bg-gray-200">Section</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td className="border border-gray-300 px-4 py-2">
+          <a href="#job-description" className="text-blue-500 hover:underline">Job Description</a>
+        </td>
+      </tr>
+      <tr>
+        <td className="border border-gray-300 px-4 py-2">
+          <a href="#job-details" className="text-blue-500 hover:underline">Job Details</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  {/* Video Section */}
+  <div className="bg-gray-100 p-4 rounded shadow-md">
+    <h2 className="text-lg sm:text-xl font-semibold mb-4">Related Video</h2>
+    <div className="aspect-w-16 aspect-h-9 mb-4">
+      <iframe
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ" // Replace with your video link
+        title="Related Video"
+        className="w-full h-full rounded"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
+    </div>
+    <p className="text-sm text-gray-600">Watch this video to learn more about the job role and its responsibilities.</p>
+  </div>
+</div>
+
     </div>
   );
 };
