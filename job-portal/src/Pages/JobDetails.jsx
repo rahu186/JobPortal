@@ -67,19 +67,41 @@ const JobDetails = () => {
           />
         </div>
 
-        {/* Job Description Section */}
-        <div id="job-description" className="bg-white p-6 rounded shadow-md mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold mb-4">Job Description</h2>
-          <div className="mb-6">
-            {/* Render job description as HTML */}
-            {job.description && (
-              <div
-                className="text-base sm:text-lg"
-                dangerouslySetInnerHTML={{ __html: job.description }}
-              />
-            )}
-          </div>
+          {/* Job Description Section */}
+<div id="job-description" className="bg-white p-6 rounded shadow-md mb-8">
+  <h2 className="text-lg sm:text-xl font-semibold mb-4">Job Description</h2>
+  <div className="mb-6">
+    {/* Check if job description exists */}
+    {job.description ? (
+      // Check if the description already contains HTML tags or if it's plain text
+      job.description.includes("<") ? (
+        // If it's HTML, render it directly
+        <div className="text-base sm:text-lg" dangerouslySetInnerHTML={{ __html: job.description }} />
+      ) : (
+        // If it's plain text, wrap it in paragraph tags and bold titles
+        <div className="text-base sm:text-lg">
+          {job.description.split("\n").map((item, index) => (
+            <p key={index}>
+              {/* Regex to find and bold potential titles */}
+              {item.split(/(\b[A-Z][a-z]*\b)/g).map((part, idx) => (
+                <span key={idx}>
+                  {part.match(/\b[A-Z][a-z]*\b/) ? <strong>{part}</strong> : part}
+                </span>
+              ))}
+            </p>
+          ))}
         </div>
+      )
+    ) : (
+      // Fallback message if description is not available
+      <div className="text-base sm:text-lg">
+        <p>No job description available. Please check back later.</p>
+      </div>
+    )}
+  </div>
+</div>
+
+
 
         {/* Job Details Section */}
         <div id="job-details" className="bg-white p-6 rounded shadow-md mb-8">

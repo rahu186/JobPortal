@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useMemo  } from "react";
 import { useForm } from "react-hook-form";
 import Creatable from "react-select/creatable";
 
+
+
 const CreateJob = () => {
   const [selectedOption, setSelectedOption] = useState(null);
+  const editor = useRef(null);
+	const [content, setContent] = useState('');
 
   const {
     register,
