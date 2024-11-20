@@ -1,24 +1,52 @@
-import React, { useState, useRef, useMemo  } from "react";
-import { useForm } from "react-hook-form";
+import React, { useState, useRef} from "react";
+import { useForm,Controller } from "react-hook-form";
 import Creatable from "react-select/creatable";
-
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 
 const CreateJob = () => {
   const [selectedOption, setSelectedOption] = useState(null);
-  const editor = useRef(null);
-	const [content, setContent] = useState('');
+  const [value, setValue] = useState('');
+  const quillRef = useRef(null);
 
+  const toolbarOptions = [
+    ['bold', 'italic', 'underline', 'strike'],
+    ['blockquote', 'code-block'],
+    ['link', 'image', 'video', 'formula'],
+    [{ 'header': 1 }, { 'header': 2 }],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+    [{ 'script': 'sub'}, { 'script': 'super' }],
+    [{ 'indent': '-1'}, { 'indent': '+1' }],
+    [{ 'direction': 'rtl' }],
+    [{ 'size': ['small', false, 'large', 'huge'] }],
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+    [{ 'color': [] }, { 'background': [] }],
+    [{ 'font': [] }],
+    [{ 'align': [] }],
+    ['clean']
+  ];
+  const quillModule ={
+    toolbar: toolbarOptions,
+  }
   const {
     register,
     handleSubmit,
     watch,
+    control,
     reset,
     formState: { errors },
   } = useForm();
 
+ 
+  const handleChange = (content) => {
+    setValue(content);  // Update state with editor content
+  };
+  
+
   const onSubmit = (data) => {
     data.skills = selectedOption;
+    data.description = value;
     fetch("https://jobportal-slg2.onrender.com/post-job", {
       method: "POST",
       headers: { 'content-type': 'application/json' },
@@ -31,6 +59,7 @@ const CreateJob = () => {
         }
         reset();
       });
+     
   };
 
   const options = [
@@ -42,6 +71,8 @@ const CreateJob = () => {
     { value: "MongoDB", label: "MongoDB" },
     { value: "Python", label: "Python" },
   ];
+
+  
 
   return (
     <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
@@ -240,7 +271,7 @@ const CreateJob = () => {
 
 
           {/*Eighth row*/}
-          <div>
+          {/* <div>
             <label className="block mb-2 text-lg sm:text-xl">Job Description</label>
             <textarea
               className="w-full pl-3 py-1.5 focus:outline-none"
@@ -248,7 +279,28 @@ const CreateJob = () => {
               placeholder="Job Description"
               {...register("description")}
             />
+          </div> */}
+            <div>
+            <label className="block mb-2 text-lg sm:text-xl">Job Description</label>
+            <Controller
+              name="description"
+              control={control}
+              render={({ field }) => (
+                <ReactQuill
+                  {...field}
+                  
+                  value={value}
+                  onChange={handleChange}
+                  placeholder="Job Description"
+                  modules={quillModule}
+                  theme="snow"
+                  className="w-full pl-3 py-1.5 bg-white focus:outline-none"
+                />
+              )}
+            />
           </div>
+
+          
 
           {/*Last row*/}
           <div>

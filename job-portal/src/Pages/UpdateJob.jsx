@@ -1,8 +1,11 @@
 import React from 'react'
 import { useLoaderData, useParams } from 'react-router-dom'
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm ,Controller } from "react-hook-form";
 import Creatable from "react-select/creatable";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 
 const UpdateJob = () => {
     const {id} = useParams();
@@ -12,16 +15,43 @@ const UpdateJob = () => {
       companyLogo,employmentType,description,postedBy,skills} = useLoaderData();
 
       const [selectedOption, setSelectedOption] = useState(null);
+      
+      const [value, setValue] = useState(description || '');
+
+      const toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote', 'code-block'],
+        ['link', 'image', 'video', 'formula'],
+        [{ 'header': 1 }, { 'header': 2 }],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+        [{ 'indent': '-1'}, { 'indent': '+1' }],
+        [{ 'direction': 'rtl' }],
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+        ['clean']
+      ];
+      const quillModule ={
+        toolbar: toolbarOptions,
+      }
 
   const {
     register,
     handleSubmit,
-    watch,reset,
+    watch,control,reset,
     formState: { errors },
   } = useForm();
 
+  const handleChange = (content) => {
+    setValue(content);  // Update state with editor content
+  };
+
   const onSubmit = (data) => {
     data.skills = selectedOption;
+    data.description = value;
     // console.log(data);
     fetch(`https://jobportal-slg2.onrender.com/update-job/${id}`, {
       method : "PATCH",
@@ -192,12 +222,29 @@ const UpdateJob = () => {
           {/*Seventh row*/}
           <div>
             <label className="block mb-2 text-lg">Job Description</label>
-            <textarea
+            {/* <textarea
               className="w-full pl-3 py-1.5 focus:outline-none"
               rows={6}
               defaultValue={description}
               placeholder="Job Description"
               {...register("description")}
+            /> */}
+
+             <Controller
+              name="description"
+              control={control}
+              render={({ field }) => (
+                <ReactQuill
+                  {...field}
+                  defaultValue ={description}
+                  value={value}
+                  onChange={handleChange}
+                  modules={quillModule}
+                  theme="snow"
+                  placeholder="Job Description"
+                  className="w-full pl-3 py-1.5 bg-white focus:outline-none"
+                />
+              )}
             />
           </div>
 
