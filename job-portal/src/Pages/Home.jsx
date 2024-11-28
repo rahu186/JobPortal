@@ -4,6 +4,7 @@ import Jobs from "./Jobs";
 import Sidebar from "../sidebar/Sidebar";
 import Newsletter from "../component/Newsletter";
 import { Card } from "../component/Card";
+import SkeletonCard from "../component/SkeletonCard";
 
 export const Home = () => {
   const [jobs, setJobs] = useState([]);
@@ -90,7 +91,10 @@ export const Home = () => {
 
         <div className="col-span-2 bg-white p-4 mb-4 rounded">
           {isLoading ? (
-            <p className="font-medium">Loading....</p>
+            // Display skeletons while loading
+            Array(itemPerPage).fill(null).map((_, i) => (
+              <SkeletonCard key={i} />
+            ))
           ) : paginatedJobs.length > 0 ? (
             <Jobs result={paginatedJobs.map((data, i) => <Card key={i} data={data} />)} />
           ) : (

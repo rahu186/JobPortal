@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
+import React, { useContext, useState, useEffect } from 'react';
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import app from '../firebase/firebase.config';
-import { useNavigate, Link } from 'react-router-dom';  // Import Link here
+import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
@@ -14,30 +14,44 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    // Handle Google Login
     const handleGoogleLogin = () => {
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
                 setUser(user);
-                navigate('/');  // Navigate to homepage or dashboard after successful login
+                navigate('/'); // Navigate to homepage or dashboard
             })
             .catch((error) => {
-                setError(error.message);  // Display error message if login fails
+                setError(error.message); // Display error message if login fails
             });
     };
 
+    // Handle Email/Password Login
     const handleEmailLogin = (e) => {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
             .then((result) => {
                 const user = result.user;
                 setUser(user);
-                navigate('/');  // Navigate to homepage or dashboard after successful login
+                navigate('/'); // Navigate to homepage or dashboard
             })
             .catch((error) => {
-                setError(error.message);  // Display error message if login fails
+                setError(error.message); // Display error message if login fails
             });
     };
+
+    // Automatically log the user in on page load
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user); // Automatically set the user in context
+                navigate('/'); // Redirect to dashboard/homepage
+            }
+        });
+
+        return () => unsubscribe(); // Cleanup subscription on unmount
+    }, [auth, setUser, navigate]);
 
     return (
         <div className='h-screen w-full flex items-center justify-center bg-gray-100'>

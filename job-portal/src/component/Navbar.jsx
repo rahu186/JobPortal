@@ -24,12 +24,21 @@ export const Navbar = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        setUser(null); // Reset user context
-        console.log("User logged out"); // Optional: log message
-        navigate("/"); // Redirect to home page
+        // Optional: Clear session storage or cookies if you're using them
+        localStorage.removeItem("userToken"); // Example: Custom session token removal
+        
+        // Reset the user context
+        setUser(null);
+        
+        console.log("User logged out");
+        
+        // Redirect to the homepage or login page
+        navigate("/");
       })
       .catch((error) => {
-        console.error("Logout error:", error); // Handle errors if needed
+        console.error("Logout error:", error);
+        // Optional: Show a user-friendly message
+        alert("Error logging out. Please try again.");
       });
   };
 
@@ -120,27 +129,19 @@ export const Navbar = () => {
             <li className="text-base text-white py-1 mt-3">
               {user ? (
                 <button
-                  onClick={() => {
-                    handleLogout();
-                    handleMenuToggler();
-                  }}
-                  className="py-2 px-4 border rounded bg-red-600 text-white w-full"
+                  onClick={handleLogout}
+                  className="py-2 px-5 border rounded bg-red-600 text-white"
                 >
                   Logout
                 </button>
               ) : (
-                <div className="flex flex-col gap-3">
-                  <Link
-                    to="/login"
-                    className="py-2 px-4 border rounded bg-white text-primary w-full text-center"
-                    onClick={handleMenuToggler}
-                  >
+                <div className="text-base text-white font-medium space-x-5">
+                  <Link to="/login" className="py-2 px-5 border rounded">
                     Log in
                   </Link>
                   <Link
                     to="/sign-up"
-                    className="py-2 px-4 border rounded bg-blue text-white w-full text-center"
-                    onClick={handleMenuToggler}
+                    className="py-2 px-5 border rounded bg-blue text-white"
                   >
                     Sign Up
                   </Link>

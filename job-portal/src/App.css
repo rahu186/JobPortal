@@ -31,6 +31,60 @@ li {
   color: #323232;
   cursor: pointer;
 }
+/* Skeleton Card */
+.skeleton-card {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-header {
+  width: 80%;
+  height: 20px;
+  background-color: #e0e0e0;
+  margin-bottom: 10px;
+}
+
+.skeleton-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton-title {
+  width: 60%;
+  height: 16px;
+  background-color: #e0e0e0;
+  margin-bottom: 8px;
+  
+}
+
+.skeleton-location {
+  width: 40%;
+  height: 14px;
+  background-color: #e0e0e0;
+  margin-bottom: 8px;
+}
+
+.skeleton-footer {
+  width: 50%;
+  height: 12px;
+  background-color: #e0e0e0;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #f0f0f0;
+  }
+  50% {
+    background-color: #e0e0e0;
+  }
+  100% {
+    background-color: #f0f0f0;
+  }
+}
+
 
 /* jobs page */
 
