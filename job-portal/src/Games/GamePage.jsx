@@ -12,7 +12,7 @@ const GamePage = () => {
 
   useEffect(() => {
     // Fetch game details based on the game name
-    console.log("Fetching game:", gameName);
+    // console.log("Fetching game:", gameName);
     fetch(`https://jobportal-slg2.onrender.com/games/${gameName}`)
     
     
