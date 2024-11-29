@@ -21,7 +21,9 @@ export const Home = () => {
     fetch("https://jobportal-slg2.onrender.com/all-jobs")
       .then((res) => res.json())
       .then((data) => {
-        const sortedJobs = data.sort((a, b) => new Date(b.postingDate) - new Date(a.postingDate));
+        const sortedJobs = data.sort(
+          (a, b) => new Date(b.postingDate) - new Date(a.postingDate)
+        );
         setJobs(sortedJobs);
         setIsLoading(false);
       })
@@ -42,31 +44,31 @@ export const Home = () => {
     setCurrentPage(1); // Reset page to 1 when a new filter is applied
   };
 
-   // Handle sidebar location change
-   const handleSidebarLocationChange = (value) => {
+  // Handle sidebar location change
+  const handleSidebarLocationChange = (value) => {
     setSidebarLocation(value);
     setCurrentPage(1); // Reset page to 1 when location is updated
   };
 
   const applyFilters = (job) => {
     // First, check for job title match if query is not empty
-    const jobTitleMatch = query ? job.jobTitle.toLowerCase().includes(query.toLowerCase()) : true;
-  
-    // Then, check for location match if location is not empty
-    const locationMatch = location ? job.jobLocation.toLowerCase().includes(location.toLowerCase()) : true;
+    const jobTitleMatch = query
+      ? job.jobTitle.toLowerCase().includes(query.toLowerCase())
+      : true;
 
+    // Then, check for location match if location is not empty
+    const locationMatch = location
+      ? job.jobLocation.toLowerCase().includes(location.toLowerCase())
+      : true;
 
     // Sidebar location filter
     const sidebarLocationMatch = sidebarLocation
       ? job.jobLocation.toLowerCase().includes(sidebarLocation.toLowerCase())
       : true;
-  
+
     // Return true if both conditions match (or if they are not set)
-    return (jobTitleMatch && locationMatch && sidebarLocationMatch);
+    return jobTitleMatch && locationMatch && sidebarLocationMatch;
   };
-
-
-  
 
   const filteredJobs = jobs.filter(applyFilters);
 
@@ -92,24 +94,55 @@ export const Home = () => {
         <div className="col-span-2 bg-white p-4 mb-4 rounded">
           {isLoading ? (
             // Display skeletons while loading
-            Array(itemPerPage).fill(null).map((_, i) => (
-              <SkeletonCard key={i} />
-            ))
+            Array(itemPerPage)
+              .fill(null)
+              .map((_, i) => <SkeletonCard key={i} />)
           ) : paginatedJobs.length > 0 ? (
             <Jobs result={paginatedJobs.map((data, i) => <Card key={i} data={data} />)} />
           ) : (
             <p>No Data Found</p>
           )}
 
+          {/* Pagination Controls */}
           {paginatedJobs.length > 0 && (
-            <div className="flex justify-center mt-4 space-x-8">
-              <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+            <div className="flex justify-center mt-4 space-x-6">
+              {/* Previous Button */}
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                style={{
+                  // padding: "8px 16px",
+                  // borderRadius: "4px",
+                  // backgroundColor: currentPage === 1 ? "#d1d5db" : "#2563eb",
+                  color: currentPage === 1 ? "#9ca3af" : "#000000",
+                  cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                }}
+              >
                 Previous
               </button>
-              <span>
-                Page {currentPage} of {totalPages}
+
+              {/* Current Page Info */}
+              <span
+              className="flex items-center justify-center"
+             
+            >
+           Page {currentPage} of {totalPages}
               </span>
-              <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>
+
+              {/* Next Button */}
+              <button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+                style={{
+                  // padding: "8px 16px",
+                  // borderRadius: "4px",
+                  // backgroundColor: currentPage === totalPages ? "#d1d5db" : "#2563eb",
+                  color: currentPage === totalPages ? "#9ca3af" : "#000000",
+                  cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+                }}
+              >
                 Next
               </button>
             </div>
