@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Flames from './Flames';
 import TruthDare from './TruthDare';
+import Snake from './Snake';
 
 const GamePage = () => {
   const { gameName } = useParams(); // Get the game name from the URL parameters
@@ -11,7 +12,10 @@ const GamePage = () => {
 
   useEffect(() => {
     // Fetch game details based on the game name
+    console.log("Fetching game:", gameName);
     fetch(`https://jobportal-slg2.onrender.com/games/${gameName}`)
+    
+    
       .then((response) => {
         // Check if the response is not OK
         if (!response.ok) {
@@ -25,10 +29,12 @@ const GamePage = () => {
         return response.json();
       })
       .then((data) => {
+        console.log("Game data:", data);
         setGame(data);
         setIsLoading(false);
       })
       .catch((err) => {
+        console.error("Error:", err);
         setError(err.message);
         setIsLoading(false);
       });
@@ -56,6 +62,8 @@ const GamePage = () => {
         return <Flames />;
       case 'truth & dare':
         return <TruthDare />;
+      case 'snake':
+        return <Snake/>;
       // Add more cases for additional games here
       default:
         return <div>Game component not found</div>;

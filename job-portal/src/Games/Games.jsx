@@ -8,6 +8,7 @@ const Games = () => {
   const games = [
     { id: 1, title: 'Flames', image: '/images/games_bg_img.jpg' },
     { id: 2, title: 'Truth & Dare', image: '/images/games_bg_img.jpg' },
+    { id: 3, title: 'Snake', image: '/images/games_bg_img.jpg' },
     // Add more games if needed
   ];
 

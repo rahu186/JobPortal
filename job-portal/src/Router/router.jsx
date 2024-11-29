@@ -63,7 +63,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/games/:gameName",
-        element: <GamePage/> // Use Flames component to handle different games
+        element: <GamePage/> 
       }
     ]
   }

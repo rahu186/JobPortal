@@ -125,7 +125,8 @@ app.get('/games/:gameName', (req, res) => {
   const { gameName } = req.params;
   const gamesData = [
     { title: 'Flames', description: 'A fun relationship game for friends.' },
-    { title: 'Truth & Dare', description: 'A classic game to reveal secrets or take on dares.' }
+    { title: 'Truth & Dare', description: 'A classic game to reveal secrets or take on dares.' },
+    { title: 'Snake', description: 'A simple classic snake game.' }
   ];
   const game = gamesData.find(
     (g) => g.title.toLowerCase().replace(/\s+/g, '-') === gameName
