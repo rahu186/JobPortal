@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import { MdArrowUpward, MdArrowDownward, MdArrowBack, MdArrowForward } from 'react-icons/md';
 
 const Snake = () => {
   const canvasRef = useRef(null);
@@ -126,34 +127,32 @@ const Snake = () => {
     }
   };
 
-  const handleTouch = (e) => {
+  const handleButtonClick = (newDirection) => {
     if (!isGameRunning || isPaused) return;
 
-    const touch = e.touches[0];
-    const middleX = canvasWidth / 2;
-    const middleY = canvasHeight / 2;
-
-    if (touch.clientX < middleX) {
-      if (touch.clientY < middleY) {
+    switch (newDirection) {
+      case "UP":
         if (direction !== "DOWN") setDirection("UP");
-      } else {
+        break;
+      case "DOWN":
         if (direction !== "UP") setDirection("DOWN");
-      }
-    } else {
-      if (touch.clientY < middleY) {
-        if (direction !== "RIGHT") setDirection("RIGHT");
-      } else {
-        if (direction !== "LEFT") setDirection("LEFT");
-      }
+        break;
+      case "LEFT":
+        if (direction !== "RIGHT") setDirection("LEFT");
+        break;
+      case "RIGHT":
+        if (direction !== "LEFT") setDirection("RIGHT");
+        break;
+      default:
+        break;
     }
   };
 
   useEffect(() => {
     const adjustSpeed = () => {
-      // Check if score is a multiple of 10
       if (score > 0 && score % 10 === 0) {
         const newSpeed = 100 - Math.floor(score / 10) * 20;
-        setSpeed(Math.max(newSpeed, 50)); // Cap speed to 50ms
+        setSpeed(Math.max(newSpeed, 50));
       }
     };
 
@@ -174,11 +173,9 @@ const Snake = () => {
     setContext(canvas.getContext("2d"));
 
     window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("touchstart", handleTouch, { passive: true });
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("touchstart", handleTouch);
     };
   }, [isGameRunning, direction]);
 
@@ -187,10 +184,10 @@ const Snake = () => {
     setFood(initialFood);
     setDirection("RIGHT");
     setIsGameRunning(true);
-    setIsPaused(false); // Ensure game isn't paused when starting
+    setIsPaused(false);
     setScore(0);
-    setSpeed(100); // Reset speed
-    setModalVisible(false); // Hide the modal on game start
+    setSpeed(100);
+    setModalVisible(false);
   };
 
   const closeModal = () => {
@@ -198,7 +195,14 @@ const Snake = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", fontFamily: "Arial, sans-serif", backgroundColor: "#f0f0f0", padding: "20px" }}>
+    <div
+      style={{
+        textAlign: "center",
+        fontFamily: "Arial, sans-serif",
+        backgroundColor: "#f0f0f0",
+        padding: "20px",
+      }}
+    >
       <h2 style={{ fontSize: "24px", color: "#333" }}>Score: {score}</h2>
       <h3 style={{ fontSize: "20px", color: "#555" }}>Highest Score: {highestScore}</h3>
       <button
@@ -230,25 +234,100 @@ const Snake = () => {
         }}
       />
 
-      {/* Modal */}
+      <div style={{ marginTop: "20px" }}>
+        <button
+          onClick={() => handleButtonClick("UP")}
+          style={{
+            padding: "10px",
+            fontSize: "16px",
+            margin: "5px",
+            backgroundColor: "#2196F3",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+        >
+          <MdArrowUpward />
+
+        </button>
+        <div>
+          <button
+            onClick={() => handleButtonClick("LEFT")}
+            style={{
+              padding: "10px",
+              fontSize: "16px",
+              margin: "5px 20px",
+              backgroundColor: "#2196F3",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            <MdArrowBack />
+
+          </button>
+          <button
+            onClick={() => handleButtonClick("RIGHT")}
+            style={{
+              padding: "10px",
+              fontSize: "16px",
+              margin: "5px 20px",
+              backgroundColor: "#2196F3",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            <MdArrowForward />
+
+          </button>
+        </div>
+        <button
+          onClick={() => handleButtonClick("DOWN")}
+          style={{
+            padding: "10px",
+            fontSize: "16px",
+            margin: "5px",
+            backgroundColor: "#2196F3",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+        >
+          <MdArrowDownward />
+
+        </button>
+      </div>
+
       {modalVisible && (
         <div
           style={{
-            position: "fixed",
+             position: "fixed",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             backgroundColor: "#fff",
-            padding: "30px",
+            padding: "20px",
             borderRadius: "10px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
             textAlign: "center",
             zIndex: 1000,
-           
           }}
         >
-          <h2 style={{ color: "#333", fontSize: "24px" }}>{modalMessage}</h2>
-          <button
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: "15px",
+              borderRadius: "10px",
+              textAlign: "center",
+            }}
+          >
+          <h5 style={{ color: "#333", fontSize: "20px" }}>{modalMessage}</h5>
+             <button
             onClick={startGame}
             style={{
               padding: "10px 20px",
@@ -263,10 +342,10 @@ const Snake = () => {
           >
             Restart 
           </button>
-          <button
-            onClick={closeModal}
-            style={{
-              padding: "10px 20px",
+            <button
+              onClick={closeModal}
+              style={{
+                padding: "10px 20px",
               fontSize: "16px",
               backgroundColor: "#f44336",
               color: "white",
@@ -275,10 +354,11 @@ const Snake = () => {
               cursor: "pointer",
               marginTop: "10px",
              
-            }}
-            className="ml-0 sm:ml-8 md:ml-8" >
-            Close
-          </button>
+              }}
+            className="ml-0 sm:ml-8 md:ml-8"  >
+              Close
+            </button>
+          </div>
         </div>
       )}
     </div>
