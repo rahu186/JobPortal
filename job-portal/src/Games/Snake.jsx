@@ -8,9 +8,9 @@ const Snake = () => {
   const [modalMessage, setModalMessage] = useState(""); // Store modal message
 
   // Adjust canvas dimensions and box size for mobile responsiveness
-  const canvasWidth = window.innerWidth > 600 ? 400 : window.innerWidth - 60;
-  const canvasHeight = window.innerWidth > 600 ? 400 : window.innerWidth - 60;
-  const boxSize = window.innerWidth > 600 ? 20 : 15; // Make snake and food smaller on mobile
+  const canvasWidth = window.innerWidth > 600 ? 400 : window.innerWidth - 50;
+  const canvasHeight = window.innerWidth > 600 ? 400 : window.innerHeight - 60;
+  const boxSize = window.innerWidth > 600 ? 20 : 18; // Make snake and food smaller on mobile
 
   const initialSnake = [{ x: 10 * boxSize, y: 10 * boxSize }];
   const initialFood = {
@@ -107,6 +107,7 @@ const Snake = () => {
   };
 
   const handleKeyDown = (e) => {
+    e.preventDefault();
     if (!isGameRunning || isPaused) return;
 
     switch (e.key) {
@@ -128,6 +129,7 @@ const Snake = () => {
   };
 
   const handleButtonClick = (newDirection) => {
+   
     if (!isGameRunning || isPaused) return;
 
     switch (newDirection) {
@@ -146,6 +148,7 @@ const Snake = () => {
       default:
         break;
     }
+   
   };
 
   useEffect(() => {
@@ -238,7 +241,7 @@ const Snake = () => {
         <button
           onClick={() => handleButtonClick("UP")}
           style={{
-            padding: "10px",
+            padding: "20px",
             fontSize: "16px",
             margin: "5px",
             backgroundColor: "#2196F3",
@@ -255,7 +258,7 @@ const Snake = () => {
           <button
             onClick={() => handleButtonClick("LEFT")}
             style={{
-              padding: "10px",
+              padding: "20px",
               fontSize: "16px",
               margin: "5px 20px",
               backgroundColor: "#2196F3",
@@ -271,7 +274,7 @@ const Snake = () => {
           <button
             onClick={() => handleButtonClick("RIGHT")}
             style={{
-              padding: "10px",
+              padding: "20px",
               fontSize: "16px",
               margin: "5px 20px",
               backgroundColor: "#2196F3",
@@ -288,7 +291,7 @@ const Snake = () => {
         <button
           onClick={() => handleButtonClick("DOWN")}
           style={{
-            padding: "10px",
+            padding: "20px",
             fontSize: "16px",
             margin: "5px",
             backgroundColor: "#2196F3",
