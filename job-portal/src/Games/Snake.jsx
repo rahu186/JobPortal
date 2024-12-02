@@ -9,7 +9,7 @@ const Snake = () => {
 
   // Adjust canvas dimensions and box size for mobile responsiveness
   const canvasWidth = window.innerWidth > 600 ? 400 : window.innerWidth - 50;
-  const canvasHeight = window.innerWidth > 600 ? 400 : window.innerHeight - 110;
+  const canvasHeight = window.innerWidth > 600 ? 400 : window.innerHeight - 210;
   const boxSize = window.innerWidth > 600 ? 20 : 17; // Make snake and food smaller on mobile
 
   const initialSnake = [{ x: 10 * boxSize, y: 10 * boxSize }];
